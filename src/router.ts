@@ -18,6 +18,7 @@ import {
   updateNetflixMovie,
 } from "./handlers/netflix-movie";
 import { createIMDBMovie, deleteAllIMDBMovies, deleteIMDBMovie, getIMDBMovie, getIMDBMovies, updateIMDBMovie } from "./handlers/imdb-movie";
+import { createMovie, deleteAllMovies, deleteMovie, getMovie, getMovies, updateMovie } from "./handlers/movie";
 
 const router = Router();
 
@@ -25,17 +26,17 @@ const router = Router();
  * Movie
  */
  router.get("/movie", async (req: any, res: any) => {
-  getIMDBMovies(req, res);
+  getMovies(req, res);
 });
 router.get("/movie/:id", (req: any, res: any) => {
-  getIMDBMovie(req, res);
+  getMovie(req, res);
 });
 router.put(
   "/movie/:id",
   [body("name").optional(), body("votes").optional(), body("rating").optional()],
   handleInputErrors,
   (req: any, res: any) => {
-    updateIMDBMovie(req, res);
+    updateMovie(req, res);
   }
 );
 router.post(
@@ -46,15 +47,15 @@ router.post(
   ],
   handleInputErrors,
   async (req: any, res: any) => {
-    createIMDBMovie(req, res);
+    createMovie(req, res);
   }
 );
 router.delete("/movie/:id", (req: any, res: any) => {
-  deleteIMDBMovie(req, res);
+  deleteMovie(req, res);
 });
 router.delete("/movie", (req: any, res: any) => {
   async (req: any, res: any) => {
-    deleteAllIMDBMovies(req, res);
+    deleteAllMovies(req, res);
   };
 });
 /**
