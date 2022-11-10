@@ -69,13 +69,13 @@ app.delete("/movie", (req: any, res: any) => {
 /**
  * Netflix Movie
  */
- router.get("/netflix", async (req: any, res: any) => {
+ app.get("/netflix", async (req: any, res: any) => {
   getNetflixMovies(req, res);
 });
-router.get("/netflix/:id", (req: any, res: any) => {
+app.get("/netflix/:id", (req: any, res: any) => {
   getNetflixMovie(req, res);
 });
-router.put(
+app.put(
   "/netflix/:id",
   [body("title").optional(), body("releaseYear").optional()],
   handleInputErrors,
@@ -83,7 +83,7 @@ router.put(
     updateNetflixMovie(req, res);
   }
 );
-router.post(
+app.post(
   "/netflix",
   [
     body("id").isNumeric(),
@@ -95,10 +95,10 @@ router.post(
     createNetflixMovie(req, res);
   }
 );
-router.delete("/netflix/:id", (req: any, res: any) => {
+app.delete("/netflix/:id", (req: any, res: any) => {
   deleteNetflixMovie(req, res);
 });
-router.delete("/netflix", (req: any, res: any) => {
+app.delete("/netflix", (req: any, res: any) => {
   async (req: any, res: any) => {
     deleteAllNetflixMovies(req, res);
   };
@@ -107,13 +107,13 @@ router.delete("/netflix", (req: any, res: any) => {
 /**
  * IMDB Movie
  */
- router.get("/imdb", async (req: any, res: any) => {
+ app.get("/imdb", async (req: any, res: any) => {
   getIMDBMovies(req, res);
 });
-router.get("/imdb/:id", (req: any, res: any) => {
+app.get("/imdb/:id", (req: any, res: any) => {
   getIMDBMovie(req, res);
 });
-router.put(
+app.put(
   "/imdb/:id",
   [body("name").optional(), body("votes").optional(), body("rating").optional()],
   handleInputErrors,
@@ -121,7 +121,7 @@ router.put(
     updateIMDBMovie(req, res);
   }
 );
-router.post(
+app.post(
   "/imdb",
   [
     body("id").isNumeric(),
@@ -132,10 +132,10 @@ router.post(
     createIMDBMovie(req, res);
   }
 );
-router.delete("/imdb/:id", (req: any, res: any) => {
+app.delete("/imdb/:id", (req: any, res: any) => {
   deleteIMDBMovie(req, res);
 });
-router.delete("/imdb", (req: any, res: any) => {
+app.delete("/imdb", (req: any, res: any) => {
   async (req: any, res: any) => {
     deleteAllIMDBMovies(req, res);
   };
