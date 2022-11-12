@@ -21,7 +21,7 @@ export const createNewUser = async (req: any, res: any) => {
     console.log("TOKEN", token)
 
     res.status(200);
-    res.json(token);
+    res.json({data: token, error: []});
   } catch (e) {
     console.log("OH NO WE GOT AN ERROR")
     res.status(500);
