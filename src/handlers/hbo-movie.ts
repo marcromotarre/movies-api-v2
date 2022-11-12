@@ -1,7 +1,7 @@
 import prisma from "../db";
 
 export const createHBOMovie = async (req: any, res: any) => {
-  const upsert = await prisma.hBOMovie.upsert({
+ /* const upsert = await prisma.hBOMovie.upsert({
     where: {
       id: req.body.id,
     },
@@ -16,7 +16,7 @@ export const createHBOMovie = async (req: any, res: any) => {
     },
   });
   res.status(200)
-  res.json({ data: upsert, errors: [] });
+  res.json({ data: upsert, errors: [] });*/
 };
 
 export const getHBOMovies = async (req: any, res: any) => {
