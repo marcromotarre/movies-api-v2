@@ -10,17 +10,23 @@ export const getMoviesInGallery = async (req: any, res: any) => {
         },
       },
     },
-    include: {
+    select: {
+      name: true,
+      image: true,
       platforms: {
-        include: {
-          imdbMovie: true,
+        select: {
+          imdbMovie: {
+            select: {
+              rating: true,
+            },
+          },
         },
       },
     },
     orderBy: {
       platforms: {
         imdbMovie: {
-          rating: 'desc',
+          rating: "desc",
         },
       },
     },
