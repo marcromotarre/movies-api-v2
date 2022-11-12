@@ -41,13 +41,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req: any, res: any) => {
   res.status(200);
-  res.json({ message: "Filmotek API 1.4" });
+  res.json({ message: "Filmotek API 1.5" });
 });
 
 app.use("/api", protect, router);
+
 app.post("/user", async (req: any, res: any) => {
   createNewUser(req, res);
 });
+
 app.post("/signin", async (req: any, res: any) => {
   signin(req, res);
 });
@@ -177,7 +179,7 @@ app.post("/platforms", [], handleInputErrors, async (req: any, res: any) => {
 /**
  * Movie Gallery
  */
-router.get("/movie-gallery", (req: any, res: any) => {
+app.get("/movie-gallery", (req: any, res: any) => {
   getMoviesInGallery(req, res);
 });
 

@@ -32,7 +32,11 @@ export const createIMDBMovie = async (req: any, res: any) => {
 };
 
 export const getIMDBMovies = async (req: any, res: any) => {
-  const get = await prisma.iMDBMovie.findMany({});
+  const get = await prisma.iMDBMovie.findMany({
+    where: {
+      rating: null
+    }
+  });
   res.json({ data: get, errors: [] });
 };
 

@@ -35,6 +35,7 @@ import {
 } from "./handlers/movie";
 import { createMoviePlatforms } from "./handlers/platforms";
 import { getMoviesInGallery } from "./handlers/movie-gallery";
+import { createHBOMovie } from "./handlers/hbo-movie";
 
 const router = Router();
 
@@ -115,7 +116,7 @@ router.put("/user-ranking-engines/:id", async (req: any, res: any) => {
  * Movie Gallery
  */
 router.get("/movie-gallery", (req: any, res: any) => {
-  getMoviesInGallery(req,res)
+  getMoviesInGallery(req, res);
 });
 
 /**
@@ -162,7 +163,10 @@ router.delete("/netflix", (req: any, res: any) => {
 router.get("/hbo", (req: any, res: any) => {});
 router.get("/hbo/:id", (req: any, res: any) => {});
 router.put("/hbo/:id", (req: any, res: any) => {});
-router.post("/hbo", (req: any, res: any) => {});
+router.post("/hbo", async (req: any, res: any) => {
+  createHBOMovie(req, res);
+});
+
 router.delete("/hbo/:id", (req: any, res: any) => {});
 router.delete("/hbo", (req: any, res: any) => {});
 

@@ -56,7 +56,7 @@ model Platforms {
   filmaffinityMovie     FilmaffinityMovie? @relation(fields: [filmaffinityMovieId], references: [id])
   filmaffinityMovieId   Int?               @unique
   hboMovie              HBOMovie?          @relation(fields: [hboMovieId], references: [id])
-  hboMovieId            Int?               @unique
+  hboMovieId            String?            @unique
   disneyMovie           DisneyMovie?       @relation(fields: [disneyMovieId], references: [id])
   disneyMovieId         Int?               @unique
   netflixMovie          NetflixMovie?      @relation(fields: [netflixMovieId], references: [id])
@@ -202,9 +202,9 @@ model NetflixMovie {
 }
 
 model HBOMovie {
-  id               Int        @id
+  id               String     @id
   createdAt        DateTime   @default(now())
-  title            String?
+  information      String?
   releaseYear      Int?
   platforms        Platforms?
   movieId          Int?
@@ -241,4 +241,4 @@ model NotFoundNetflixMovie {
 // npx prisma db seed
 // npx prisma studio
 
-// npx prisma migrate dev --name init
+// npx prisma migrate dev --name hbo
