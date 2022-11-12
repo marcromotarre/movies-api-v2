@@ -5,33 +5,19 @@ import { createUserPlatforms } from "./user-platforms";
 import { createUserRankingEngines } from "./user-ranking-engines";
 
 export const createNewUser = async (req: any, res: any) => {
-  console.log("USER")
-  const user = await prisma.user.create({
-    data: {
-      email: req.body.email,
-      password: await hashPassword(req.body.password),
-    },
-  });
-
-  const token = createJWT(user);
-
-  /*createUserPlatforms(
-    {
-      ...req,
-      body: { ...req.body, userId: user.id },
-    },
-    res
-  );*/
-
-  /*createUserRankingEngines(
-    {
-      ...req,
-      body: { ...req.body, userId: user.id },
-    },
-    res
-  );*/
-
-  res.json(token);
+  try {
+    const user = await prisma.user.create({
+      data: {
+        email: req.body.email,
+        password: await hashPassword(req.body.password),
+      },
+    });
+    const token = createJWT(user);
+    res.json(token);
+  } catch (e) {
+    res.status(500);
+    res.json({ error: e });
+  }
 };
 
 export const signin = async (req: any, res: any) => {
