@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import router from "./router";
 import morgan from "morgan";
 import { protect } from "./modules/auth";
@@ -34,6 +35,7 @@ import { createMoviePlatforms } from "./handlers/platforms";
 import { getMoviesInGallery } from "./handlers/movie-gallery";
 
 const app = express();
+app.use(cors());
 
 app.use(morgan("dev"));
 app.use(express.json());
