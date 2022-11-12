@@ -5,6 +5,7 @@ import { createUserPlatforms } from "./user-platforms";
 import { createUserRankingEngines } from "./user-ranking-engines";
 
 export const createNewUser = async (req: any, res: any) => {
+  console.log("USER")
   const user = await prisma.user.create({
     data: {
       email: req.body.email,

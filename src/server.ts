@@ -6,9 +6,32 @@ import { createNewUser, signin } from "./handlers/user";
 import { sign } from "crypto";
 import { handleInputErrors } from "./modules/middleware";
 import { body } from "express-validator";
-import { createMovie, deleteAllMovies, deleteMovie, getMovie, getMovies, updateMovie } from "./handlers/movie";
-import { createNetflixMovie, deleteAllNetflixMovies, deleteNetflixMovie, getNetflixMovie, getNetflixMovies, updateNetflixMovie } from "./handlers/netflix-movie";
-import { createIMDBMovie, deleteAllIMDBMovies, deleteIMDBMovie, getIMDBMovie, getIMDBMovies, updateIMDBMovie } from "./handlers/imdb-movie";
+import {
+  createMovie,
+  deleteAllMovies,
+  deleteMovie,
+  getMovie,
+  getMovies,
+  updateMovie,
+} from "./handlers/movie";
+import {
+  createNetflixMovie,
+  deleteAllNetflixMovies,
+  deleteNetflixMovie,
+  getNetflixMovie,
+  getNetflixMovies,
+  updateNetflixMovie,
+} from "./handlers/netflix-movie";
+import {
+  createIMDBMovie,
+  deleteAllIMDBMovies,
+  deleteIMDBMovie,
+  getIMDBMovie,
+  getIMDBMovies,
+  updateIMDBMovie,
+} from "./handlers/imdb-movie";
+import { createMoviePlatforms } from "./handlers/platforms";
+import { getMoviesInGallery } from "./handlers/movie-gallery";
 
 const app = express();
 
@@ -16,22 +39,20 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 app.get("/", (req: any, res: any) => {
   console.log("hello from express");
   res.status(200);
   res.json({ message: "hello 1" });
 });
 
-
 app.use("/api", protect, router);
-app.post("/user", createNewUser)
-app.post("/signin", signin)
+app.post("/user", createNewUser);
+app.post("/signin", signin);
 
 /**
  * Movie
  */
- app.get("/movie", async (req: any, res: any) => {
+app.get("/movie", async (req: any, res: any) => {
   getMovies(req, res);
 });
 app.get("/movie/:id", (req: any, res: any) => {
@@ -39,7 +60,11 @@ app.get("/movie/:id", (req: any, res: any) => {
 });
 app.put(
   "/movie/:id",
-  [body("name").optional(), body("votes").optional(), body("rating").optional()],
+  [
+    body("name").optional(),
+    body("votes").optional(),
+    body("rating").optional(),
+  ],
   handleInputErrors,
   (req: any, res: any) => {
     updateMovie(req, res);
@@ -47,10 +72,7 @@ app.put(
 );
 app.post(
   "/movie",
-  [
-    body("id").isNumeric(),
-    body("title").isString(),
-  ],
+  [body("id").isNumeric(), body("name").isString()],
   handleInputErrors,
   async (req: any, res: any) => {
     createMovie(req, res);
@@ -65,11 +87,10 @@ app.delete("/movie", (req: any, res: any) => {
   };
 });
 
-
 /**
  * Netflix Movie
  */
- app.get("/netflix", async (req: any, res: any) => {
+app.get("/netflix", async (req: any, res: any) => {
   getNetflixMovies(req, res);
 });
 app.get("/netflix/:id", (req: any, res: any) => {
@@ -107,7 +128,7 @@ app.delete("/netflix", (req: any, res: any) => {
 /**
  * IMDB Movie
  */
- app.get("/imdb", async (req: any, res: any) => {
+app.get("/imdb", async (req: any, res: any) => {
   getIMDBMovies(req, res);
 });
 app.get("/imdb/:id", (req: any, res: any) => {
@@ -115,7 +136,11 @@ app.get("/imdb/:id", (req: any, res: any) => {
 });
 app.put(
   "/imdb/:id",
-  [body("name").optional(), body("votes").optional(), body("rating").optional()],
+  [
+    body("name").optional(),
+    body("votes").optional(),
+    body("rating").optional(),
+  ],
   handleInputErrors,
   (req: any, res: any) => {
     updateIMDBMovie(req, res);
@@ -123,10 +148,7 @@ app.put(
 );
 app.post(
   "/imdb",
-  [
-    body("id").isNumeric(),
-    body("title").isString(),
-  ],
+  [body("id").isString()],
   handleInputErrors,
   async (req: any, res: any) => {
     createIMDBMovie(req, res);
@@ -139,6 +161,21 @@ app.delete("/imdb", (req: any, res: any) => {
   async (req: any, res: any) => {
     deleteAllIMDBMovies(req, res);
   };
+});
+
+/**
+ * Movie Platforms
+ */
+
+app.post("/platforms", [], handleInputErrors, async (req: any, res: any) => {
+  createMoviePlatforms(req, res);
+});
+
+/**
+ * Movie Gallery
+ */
+ router.get("/movie-gallery", (req: any, res: any) => {
+  getMoviesInGallery(req,res)
 });
 
 export default app;

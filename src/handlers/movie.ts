@@ -9,14 +9,14 @@ export const createMovie = async (req: any, res: any) => {
       name: req.body.name,
       image: req.body.image,
       year: req.body.year,
-      releaseDate: req.body.year,
+      releaseDate: req.body.releaseDate,
     },
     create: {
       id: req.body.id,
       name: req.body.name,
       image: req.body.image,
       year: req.body.year,
-      releaseDate: req.body.year,
+      releaseDate: req.body.releaseDate,
     },
   });
   res.json({ data: upsert, errors: [] });

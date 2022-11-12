@@ -1,24 +1,5 @@
 import prisma from "../db";
 
-/**
-model Platforms {
-  movieId               Int                @id @unique
-  movie                 Movie?             @relation(fields: [movieId], references: [id])
-  filmaffinityMovie     FilmaffinityMovie? @relation(fields: [filmaffinityMovieId], references: [id])
-  filmaffinityMovieId   Int?               @unique
-  hboMovie              HBOMovie?          @relation(fields: [hboMovieId], references: [id])
-  hboMovieId            Int?               @unique
-  disneyMovie           DisneyMovie?       @relation(fields: [disneyMovieId], references: [id])
-  disneyMovieId         Int?               @unique
-  netflixMovie          NetflixMovie?      @relation(fields: [netflixMovieId], references: [id])
-  netflixMovieId        Int?               @unique
-  imdbMovie             IMDBMovie?         @relation(fields: [imdbMovieId], references: [id])
-  imdbMovieId           Int?               @unique
-  rottenTomatoesMovie   RottenTomatoes?    @relation(fields: [rottenTomatoesMovieId], references: [id])
-  rottenTomatoesMovieId Int?               @unique
-}
- */
-
 // Get all platforms by user id
 export const getMoviePlatforms = async (req: any, res: any) => {
   const movie = await prisma.movie.findUnique({
@@ -35,12 +16,22 @@ export const getMoviePlatforms = async (req: any, res: any) => {
 
 // Create User Platform for a user
 export const createMoviePlatforms = async (req: any, res: any) => {
-  const platforms = await prisma.platforms.create({
-    data: {
+  console.log("platform")
+  const postPlatform = await prisma.platforms.upsert({
+    where: {
       movieId: req.body.movieId,
     },
+    update: {
+      netflixMovieId: req.body.netflixMovieId,
+      imdbMovieId: req.body.imdbMovieId
+    },
+    create: {
+      movieId: req.body.movieId,
+      netflixMovieId: req.body.netflixMovieId,
+      imdbMovieId: req.body.imdbMovieId
+    },
   });
-  res.json({ data: platforms, errors: [] });
+  res.json({ data: postPlatform, errors: [] });
 };
 
 // Update User Platform

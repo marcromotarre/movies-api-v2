@@ -39,7 +39,7 @@ export const getIMDBMovies = async (req: any, res: any) => {
 export const getIMDBMovie = async (req: any, res: any) => {
   const get = await prisma.iMDBMovie.findUnique({
     where: {
-      id: parseInt(req.params.id),
+      id: req.params.id,
     },
   });
   res.json({ data: get, errors: [] });
@@ -48,7 +48,7 @@ export const getIMDBMovie = async (req: any, res: any) => {
 export const updateIMDBMovie = async (req: any, res: any) => {
   const updated = await prisma.iMDBMovie.update({
     where: {
-      id: parseInt(req.params.id),
+      id: req.params.id,
     },
     data: {
       name: req.body.name,
@@ -63,7 +63,7 @@ export const updateIMDBMovie = async (req: any, res: any) => {
 export const deleteIMDBMovie = async (req: any, res: any) => {
   const deleteRow = await prisma.iMDBMovie.delete({
     where: {
-      id: parseInt(req.params.id),
+      id: req.params.id,
     },
   });
   res.json({ data: deleteRow, errors: [] });

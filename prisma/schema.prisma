@@ -62,7 +62,7 @@ model Platforms {
   netflixMovie          NetflixMovie?      @relation(fields: [netflixMovieId], references: [id])
   netflixMovieId        Int?               @unique
   imdbMovie             IMDBMovie?         @relation(fields: [imdbMovieId], references: [id])
-  imdbMovieId           Int?               @unique
+  imdbMovieId           String?            @unique
   rottenTomatoesMovie   RottenTomatoes?    @relation(fields: [rottenTomatoesMovieId], references: [id])
   rottenTomatoesMovieId Int?               @unique
 }
@@ -159,7 +159,7 @@ model FilmaffinityMovie {
 }
 
 model IMDBMovie {
-  id        Int        @id
+  id        String     @id
   createdAt DateTime   @default(now())
   name      String?
   rating    Float?

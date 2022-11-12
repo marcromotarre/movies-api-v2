@@ -17,15 +17,31 @@ import {
   getNetflixMovies,
   updateNetflixMovie,
 } from "./handlers/netflix-movie";
-import { createIMDBMovie, deleteAllIMDBMovies, deleteIMDBMovie, getIMDBMovie, getIMDBMovies, updateIMDBMovie } from "./handlers/imdb-movie";
-import { createMovie, deleteAllMovies, deleteMovie, getMovie, getMovies, updateMovie } from "./handlers/movie";
+import {
+  createIMDBMovie,
+  deleteAllIMDBMovies,
+  deleteIMDBMovie,
+  getIMDBMovie,
+  getIMDBMovies,
+  updateIMDBMovie,
+} from "./handlers/imdb-movie";
+import {
+  createMovie,
+  deleteAllMovies,
+  deleteMovie,
+  getMovie,
+  getMovies,
+  updateMovie,
+} from "./handlers/movie";
+import { createMoviePlatforms } from "./handlers/platforms";
+import { getMoviesInGallery } from "./handlers/movie-gallery";
 
 const router = Router();
 
 /**
  * Movie
  */
- router.get("/movie", async (req: any, res: any) => {
+router.get("/movie", async (req: any, res: any) => {
   getMovies(req, res);
 });
 router.get("/movie/:id", (req: any, res: any) => {
@@ -33,7 +49,11 @@ router.get("/movie/:id", (req: any, res: any) => {
 });
 router.put(
   "/movie/:id",
-  [body("name").optional(), body("votes").optional(), body("rating").optional()],
+  [
+    body("name").optional(),
+    body("votes").optional(),
+    body("rating").optional(),
+  ],
   handleInputErrors,
   (req: any, res: any) => {
     updateMovie(req, res);
@@ -41,10 +61,7 @@ router.put(
 );
 router.post(
   "/movie",
-  [
-    body("id").isNumeric(),
-    body("title").isString(),
-  ],
+  [body("id").isNumeric(), body("title").isString()],
   handleInputErrors,
   async (req: any, res: any) => {
     createMovie(req, res);
@@ -97,7 +114,9 @@ router.put("/user-ranking-engines/:id", async (req: any, res: any) => {
 /**
  * Movie Gallery
  */
-router.get("/movie/gallery", (req: any, res: any) => {});
+router.get("/movie-gallery", (req: any, res: any) => {
+  getMoviesInGallery(req,res)
+});
 
 /**
  * Netflix Movie
@@ -160,7 +179,7 @@ router.delete("/disney", (req: any, res: any) => {});
 /**
  * IMDB Movie
  */
- router.get("/imdb", async (req: any, res: any) => {
+router.get("/imdb", async (req: any, res: any) => {
   getIMDBMovies(req, res);
 });
 router.get("/imdb/:id", (req: any, res: any) => {
@@ -168,7 +187,11 @@ router.get("/imdb/:id", (req: any, res: any) => {
 });
 router.put(
   "/imdb/:id",
-  [body("name").optional(), body("votes").optional(), body("rating").optional()],
+  [
+    body("name").optional(),
+    body("votes").optional(),
+    body("rating").optional(),
+  ],
   handleInputErrors,
   (req: any, res: any) => {
     updateIMDBMovie(req, res);
@@ -176,10 +199,7 @@ router.put(
 );
 router.post(
   "/imdb",
-  [
-    body("id").isNumeric(),
-    body("title").isString(),
-  ],
+  [body("id").isNumeric(), body("title").isString()],
   handleInputErrors,
   async (req: any, res: any) => {
     createIMDBMovie(req, res);
@@ -193,7 +213,6 @@ router.delete("/imdb", (req: any, res: any) => {
     deleteAllIMDBMovies(req, res);
   };
 });
-
 
 /**
  * Filmaffinity Movie
@@ -218,5 +237,13 @@ router.put("/rottentomatoes/:id", (req: any, res: any) => {});
 router.post("/rottentomatoes", (req: any, res: any) => {});
 router.delete("/rottentomatoes/:id", (req: any, res: any) => {});
 router.delete("/rottentomatoes", (req: any, res: any) => {});
+
+/**
+ * Movie Platforms
+ */
+router.get("/platforms", (req, res) => {
+  createMoviePlatforms(req, res);
+  return;
+});
 
 export default router;
