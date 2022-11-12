@@ -41,12 +41,16 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req: any, res: any) => {
   res.status(200);
-  res.json({ message: "Filmotek API 1.1" });
+  res.json({ message: "Filmotek API 1.2" });
 });
 
 app.use("/api", protect, router);
-app.post("/user", createNewUser);
-app.post("/signin", signin);
+app.post("/user", async (req: any, res: any) => {
+  createNewUser(req, res);
+});
+app.post("/signin", async (req: any, res: any) => {
+  signin(req, res);
+});
 
 /**
  * Movie
@@ -173,8 +177,8 @@ app.post("/platforms", [], handleInputErrors, async (req: any, res: any) => {
 /**
  * Movie Gallery
  */
- router.get("/movie-gallery", (req: any, res: any) => {
-  getMoviesInGallery(req,res)
+router.get("/movie-gallery", (req: any, res: any) => {
+  getMoviesInGallery(req, res);
 });
 
 export default app;
