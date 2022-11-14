@@ -33,6 +33,9 @@ import {
 } from "./handlers/imdb-movie";
 import { createMoviePlatforms } from "./handlers/platforms";
 import { getMoviesInGallery } from "./handlers/movie-gallery";
+import { createCastCredit, createCrewCredit, createMovieCredit } from "./handlers/movie-credit";
+import { createFilmaffinityMovie } from "./handlers/filmaffinity-movie";
+import { getFilmaffinityScrapperMovies } from "./handlers/filmaffinity-scrapper";
 
 const app = express();
 app.use(cors());
@@ -171,6 +174,19 @@ app.delete("/imdb", (req: any, res: any) => {
 });
 
 /**
+ * Filmaffinity
+ */
+
+ app.post(
+  "/filmaffinity",
+  [body("id").isNumeric()],
+  handleInputErrors,
+  async (req: any, res: any) => {
+    createFilmaffinityMovie(req, res);
+  }
+);
+
+/**
  * Movie Platforms
  */
 
@@ -183,6 +199,28 @@ app.post("/platforms", [], handleInputErrors, async (req: any, res: any) => {
  */
 app.get("/movie-gallery", (req: any, res: any) => {
   getMoviesInGallery(req, res);
+});
+
+app.post("/movie-credit", (req: any, res: any) => {
+  createMovieCredit(req, res);
+});
+
+app.post("/cast-credit", (req: any, res: any) => {
+  createCastCredit(req, res);
+});
+
+app.post("/crew-credit", (req: any, res: any) => {
+  createCrewCredit(req, res);
+});
+
+
+/**
+ * Scrapper
+ * 
+ */
+
+ app.get("/scrapper-left-filmaffinity", (req: any, res: any) => {
+  getFilmaffinityScrapperMovies(req, res);
 });
 
 export default app;

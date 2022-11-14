@@ -23,7 +23,16 @@ export const createMovie = async (req: any, res: any) => {
 };
 
 export const getMovies = async (req: any, res: any) => {
-  const get = await prisma.movie.findMany({});
+  const get = await prisma.movie.findMany({
+    include: {
+      movieCredits: {
+        include: {
+          cast: true,
+          crew: true,
+        },
+      },
+    },
+  });
   res.json({ data: get, errors: [] });
 };
 
