@@ -41,6 +41,7 @@ model Movie {
   image       String?
   year        Int?
   releaseDate String?
+  popularity  Float?
 
   movieCredits   MovieCredits?
   genres         Genre[]
@@ -155,7 +156,6 @@ model FilmaffinityMovie {
   rating    Float?
   votes     Int?
   platforms Platforms?
-  movieId   Int?
 }
 
 model IMDBMovie {
@@ -164,7 +164,6 @@ model IMDBMovie {
   name      String?
   rating    Float?
   votes     Int?
-  movieId   Int?
   platforms Platforms?
 }
 
@@ -180,7 +179,6 @@ model RottenTomatoes {
   verifiedAudienceNumRatings                      Int?
   allAudiencePercentatge                          Int?
   allAudienceNumRatings                           Int?
-  movieId                                         Int?
   platforms                                       Platforms?
 }
 
@@ -198,7 +196,6 @@ model NetflixMovie {
   searchIndex           Int?
   orderQuery            String?
   platforms             Platforms?
-  movieId               Int?
 }
 
 model HBOMovie {
@@ -207,8 +204,6 @@ model HBOMovie {
   information      String?
   releaseYear      Int?
   platforms        Platforms?
-  movieId          Int?
-  platformsMovieId Int?
 }
 
 model DisneyMovie {
@@ -217,23 +212,6 @@ model DisneyMovie {
   title            String?
   releaseYear      Int?
   platforms        Platforms?
-  movieId          Int?
-  platformsMovieId Int?
-}
-
-model NotFoundNetflixMovie {
-  id                    Int      @id
-  createdAt             DateTime @default(now())
-  title                 String?
-  releaseYear           Int?
-  requestId             String?
-  type                  String?
-  isOriginal            Boolean?
-  availabilityDate      String?
-  availabilityStartTime Int?
-  isPlayable            Boolean?
-  searchIndex           Int?
-  orderQuery            String?
 }
 
 // npx prisma db push
@@ -241,4 +219,4 @@ model NotFoundNetflixMovie {
 // npx prisma db seed
 // npx prisma studio
 
-// npx prisma migrate dev --name hbo
+// npx prisma migrate dev --name popularity

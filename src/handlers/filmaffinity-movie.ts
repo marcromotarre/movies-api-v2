@@ -19,14 +19,12 @@ export const createFilmaffinityMovie = async (req: any, res: any) => {
       name: req.body.name,
       rating: req.body.rating,
       votes: req.body.votes,
-      movieId: req.body.movieId,
     },
     create: {
       id: req.body.id,
       name: req.body.name,
       rating: req.body.rating,
       votes: req.body.votes,
-      movieId: req.body.movieId,
     },
   });
   res.json({ data: upsert, errors: [] });
@@ -59,7 +57,6 @@ export const updateFilmaffinityMovie = async (req: any, res: any) => {
       name: req.body.name,
       rating: req.body.rating,
       votes: req.body.votes,
-      movieId: req.body.movieId,
     },
   });
   res.json({ data: updated, errors: [] });

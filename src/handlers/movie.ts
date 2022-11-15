@@ -1,6 +1,7 @@
 import prisma from "../db";
 
 export const createMovie = async (req: any, res: any) => {
+  console.log("popularity", req.body.popularity);
   const upsert = await prisma.movie.upsert({
     where: {
       id: req.body.id,
@@ -10,6 +11,7 @@ export const createMovie = async (req: any, res: any) => {
       image: req.body.image,
       year: req.body.year,
       releaseDate: req.body.releaseDate,
+      popularity: req.body.popularity,
     },
     create: {
       id: req.body.id,
@@ -17,6 +19,7 @@ export const createMovie = async (req: any, res: any) => {
       image: req.body.image,
       year: req.body.year,
       releaseDate: req.body.releaseDate,
+      popularity: req.body.popularity,
     },
   });
   res.json({ data: upsert, errors: [] });
@@ -55,6 +58,7 @@ export const updateMovie = async (req: any, res: any) => {
       image: req.body.image,
       year: req.body.year,
       releaseDate: req.body.year,
+      popularity: req.body.popularity,
     },
   });
   res.json({ data: updated, errors: [] });

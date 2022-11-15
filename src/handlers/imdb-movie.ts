@@ -1,14 +1,5 @@
 import prisma from "../db";
 
-/*
-  id        Int        @id
-  createdAt DateTime   @default(now())
-  name      String?
-  rating    Float?
-  votes     Int?
-  movieId   Int?
-*/
-
 export const createIMDBMovie = async (req: any, res: any) => {
   console.log(req.body.id, req.body.rating, req.body.votes)
   const upsert = await prisma.iMDBMovie.upsert({
@@ -19,14 +10,12 @@ export const createIMDBMovie = async (req: any, res: any) => {
       name: req.body.name,
       rating: req.body.rating,
       votes: req.body.votes,
-      movieId: req.body.movieId,
     },
     create: {
       id: req.body.id,
       name: req.body.name,
       rating: req.body.rating,
       votes: req.body.votes,
-      movieId: req.body.movieId,
     },
   });
   res.json({ data: upsert, errors: [] });
@@ -59,7 +48,6 @@ export const updateIMDBMovie = async (req: any, res: any) => {
       name: req.body.name,
       rating: req.body.rating,
       votes: req.body.votes,
-      movieId: req.body.movieId,
     },
   });
   res.json({ data: updated, errors: [] });

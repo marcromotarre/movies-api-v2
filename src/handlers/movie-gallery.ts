@@ -1,15 +1,13 @@
 import prisma from "../db";
 
 export const getMoviesInGallery = async (req: any, res: any) => {
-  const elementsPerPage = req.body.num ? req.body.num : 10;
-  const page = req.body.page ? req.body.page : 0;
+  const elementsPerPage = req.query.num ? req.query.num : 10;
+  const page = req.query.page ? req.query.page : 0;
+  console.log("page", req.query.page);
   try {
     const count = await prisma.movie.count({
       where: {
         platforms: {
-          imdbMovie: {
-            rating: { gt: 0 },
-          },
           filmaffinityMovie: {
             rating: { gt: 0 },
           },
@@ -22,9 +20,6 @@ export const getMoviesInGallery = async (req: any, res: any) => {
       take: elementsPerPage,
       where: {
         platforms: {
-          imdbMovie: {
-            rating: { gt: 0 },
-          },
           filmaffinityMovie: {
             rating: { gt: 0 },
           },

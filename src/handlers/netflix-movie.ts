@@ -25,7 +25,14 @@ export const createNetflixMovie = async (req: any, res: any) => {
 };
 
 export const getNetflixMovies = async (req: any, res: any) => {
-  const get = await prisma.netflixMovie.findMany({});
+  const get = await prisma.netflixMovie.findMany({
+    where: {
+      platforms: null
+    },
+    orderBy: {
+      title: "desc"
+    }
+  });
   res.json({ data: get, errors: [] });
 };
 
