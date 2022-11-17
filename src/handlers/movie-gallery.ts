@@ -4,6 +4,12 @@ export const getMoviesInGallery = async (req: any, res: any) => {
   const elementsPerPage = req.query.num ? req.query.num : 10;
   const page = req.query.page ? req.query.page : 0;
   console.log("page", req.query.page);
+
+  let ranking_platform_field = "filmaffinityMovie";
+
+  if(req.body.useIMDB) {
+    ranking_platform_field = "imdbMovie";
+  }
   try {
     const count = await prisma.movie.count({
       where: {
@@ -20,7 +26,7 @@ export const getMoviesInGallery = async (req: any, res: any) => {
       take: elementsPerPage,
       where: {
         platforms: {
-          filmaffinityMovie: {
+          [ranking_platform_field]: {
             rating: { gt: 0 },
           },
         },
@@ -30,12 +36,7 @@ export const getMoviesInGallery = async (req: any, res: any) => {
         image: true,
         platforms: {
           select: {
-            imdbMovie: {
-              select: {
-                rating: true,
-              },
-            },
-            filmaffinityMovie: {
+            [ranking_platform_field]: {
               select: {
                 rating: true,
               },
@@ -45,7 +46,7 @@ export const getMoviesInGallery = async (req: any, res: any) => {
       },
       orderBy: {
         platforms: {
-          filmaffinityMovie: {
+          [ranking_platform_field]: {
             rating: "desc",
           },
         },

@@ -15,6 +15,9 @@ export const getFilmaffinityScrapperMovies = async (req: any, res: any) => {
         },
       },
     },
+    orderBy: {
+      popularity: "desc",
+    },
   });
   res.json({ data: get, errors: [] });
 };

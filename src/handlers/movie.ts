@@ -1,7 +1,6 @@
 import prisma from "../db";
 
 export const createMovie = async (req: any, res: any) => {
-  console.log("popularity", req.body.popularity);
   const upsert = await prisma.movie.upsert({
     where: {
       id: req.body.id,

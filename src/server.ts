@@ -33,7 +33,11 @@ import {
 } from "./handlers/imdb-movie";
 import { createMoviePlatforms } from "./handlers/platforms";
 import { getMoviesInGallery } from "./handlers/movie-gallery";
-import { createCastCredit, createCrewCredit, createMovieCredit } from "./handlers/movie-credit";
+import {
+  createCastCredit,
+  createCrewCredit,
+  createMovieCredit,
+} from "./handlers/movie-credit";
 import { createFilmaffinityMovie } from "./handlers/filmaffinity-movie";
 import { getFilmaffinityScrapperMovies } from "./handlers/filmaffinity-scrapper";
 
@@ -129,6 +133,7 @@ app.post(
 app.delete("/netflix/:id", (req: any, res: any) => {
   deleteNetflixMovie(req, res);
 });
+
 app.delete("/netflix", (req: any, res: any) => {
   async (req: any, res: any) => {
     deleteAllNetflixMovies(req, res);
@@ -177,7 +182,7 @@ app.delete("/imdb", (req: any, res: any) => {
  * Filmaffinity
  */
 
- app.post(
+app.post(
   "/filmaffinity",
   [body("id").isNumeric()],
   handleInputErrors,
@@ -213,13 +218,12 @@ app.post("/crew-credit", (req: any, res: any) => {
   createCrewCredit(req, res);
 });
 
-
 /**
  * Scrapper
- * 
+ *
  */
 
- app.get("/scrapper-left-filmaffinity", (req: any, res: any) => {
+app.get("/scrapper-left-filmaffinity", (req: any, res: any) => {
   getFilmaffinityScrapperMovies(req, res);
 });
 

@@ -1,15 +1,21 @@
 import { ServerResponse } from "http";
 import prisma from "../db";
 import { comparePasswords, createJWT, hashPassword } from "../modules/auth";
-import { createUserPlatforms } from "./user-platforms";
-import { createUserRankingEngines } from "./user-ranking-engines";
 
 export const createNewUser = async (req: any, res: any) => {
+  console.log(req.body.email, req.body.password)
   try {
+    // create user UserParams
+
     const user = await prisma.user.create({
       data: {
         email: req.body.email,
         password: await hashPassword(req.body.password),
+      },
+    });
+    await prisma.userParams.create({
+      data: {
+        userId: user.id,
       },
     });
 

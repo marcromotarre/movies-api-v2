@@ -3,11 +3,7 @@ import { Router } from "express";
 import { body, validationResult } from "express-validator";
 import { isString } from "util";
 import { handleInputErrors } from "./modules/middleware";
-import {
-  createUserPlatforms,
-  getUserPlatforms,
-  updateUserPlatforms,
-} from "./handlers/user-platforms";
+
 import { createUserRankingEngines } from "./handlers/user-ranking-engines";
 import {
   createNetflixMovie,
@@ -36,8 +32,19 @@ import {
 import { createMoviePlatforms } from "./handlers/platforms";
 import { getMoviesInGallery } from "./handlers/movie-gallery";
 import { createHBOMovie } from "./handlers/hbo-movie";
+import { getUserParams, updateUserParams } from "./handlers/user-params";
 
 const router = Router();
+
+/**
+ * User Params
+ */
+router.get("/user-params", async (req: any, res: any) => {
+  getUserParams(req, res);
+});
+router.post("/user-params", async (req: any, res: any) => {
+  updateUserParams(req, res);
+});
 
 /**
  * Movie
@@ -75,41 +82,6 @@ router.delete("/movie", (req: any, res: any) => {
   async (req: any, res: any) => {
     deleteAllMovies(req, res);
   };
-});
-/**
- * User Platforms
- */
-router.get("/user-platforms", async (req: any, res: any) => {
-  getUserPlatforms(req, res);
-});
-router.post(
-  "/user-platforms",
-  [body("userId").isString()],
-  handleInputErrors,
-  async (req: any, res: any) => {
-    createUserPlatforms(req, res);
-  }
-);
-router.put("/user-platforms/:id", async (req: any, res: any) => {
-  updateUserPlatforms(req, res);
-});
-
-/**
- * User RankingEngines
- */
-router.get("/user-ranking-engines", async (req: any, res: any) => {
-  getUserPlatforms(req, res);
-});
-router.post(
-  "/user-ranking-engines",
-  [body("userId").isString()],
-  handleInputErrors,
-  async (req: any, res: any) => {
-    createUserRankingEngines(req, res);
-  }
-);
-router.put("/user-ranking-engines/:id", async (req: any, res: any) => {
-  updateUserPlatforms(req, res);
 });
 
 /**
