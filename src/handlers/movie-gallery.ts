@@ -7,7 +7,7 @@ export const getMoviesInGallery = async (req: any, res: any) => {
 
   let ranking_platform_field = "filmaffinityMovie";
 
-  if(req.body.useIMDB) {
+  if(req.query.useIMDB) {
     ranking_platform_field = "imdbMovie";
   }
   try {
