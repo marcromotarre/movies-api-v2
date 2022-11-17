@@ -1,8 +1,6 @@
 import prisma from "../db";
 
 export const createMovieCredit = async (req: any, res: any) => {
-  console.log("creating movie credit");
-
   const upsert = await prisma.movieCredits.upsert({
     where: {
       movieId: req.body.movieId,

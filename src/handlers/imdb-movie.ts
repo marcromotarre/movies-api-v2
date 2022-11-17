@@ -1,7 +1,6 @@
 import prisma from "../db";
 
 export const createIMDBMovie = async (req: any, res: any) => {
-  console.log(req.body.id, req.body.rating, req.body.votes)
   const upsert = await prisma.iMDBMovie.upsert({
     where: {
       id: req.body.id,

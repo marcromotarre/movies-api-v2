@@ -1,6 +1,12 @@
 import prisma from "../db";
 
 export const createNetflixMovie = async (req: any, res: any) => {
+  console.log(
+    req.body.id,
+    req.body.title,
+    req.body.releaseYear,
+    req.body.parsed
+  );
   const upsert = await prisma.netflixMovie.upsert({
     where: {
       id: req.body.id,
@@ -8,17 +14,13 @@ export const createNetflixMovie = async (req: any, res: any) => {
     update: {
       title: req.body.title,
       releaseYear: req.body.releaseYear,
-      isPlayable: req.body.isPlayable,
-      searchIndex: req.body.searchIndex,
-      orderQuery: req.body.orderQuery,
+      parsed: req.body.parsed,
     },
     create: {
       id: req.body.id,
       title: req.body.title,
       releaseYear: req.body.releaseYear,
-      isPlayable: req.body.isPlayable,
-      searchIndex: req.body.searchIndex,
-      orderQuery: req.body.orderQuery,
+      parsed: req.body.parsed,
     },
   });
   res.json({ data: upsert, errors: [] });
@@ -27,11 +29,12 @@ export const createNetflixMovie = async (req: any, res: any) => {
 export const getNetflixMovies = async (req: any, res: any) => {
   const get = await prisma.netflixMovie.findMany({
     where: {
-      platforms: null
+      platforms: null,
+      parsed: false,
     },
     orderBy: {
-      title: "desc"
-    }
+      title: "desc",
+    },
   });
   res.json({ data: get, errors: [] });
 };
@@ -46,6 +49,12 @@ export const getNetflixMovie = async (req: any, res: any) => {
 };
 
 export const updateNetflixMovie = async (req: any, res: any) => {
+  console.log(
+    req.body.id,
+    req.body.title,
+    req.body.releaseYear,
+    req.body.parsed
+  );
   const updated = await prisma.netflixMovie.update({
     where: {
       id: parseInt(req.params.id),
@@ -53,9 +62,7 @@ export const updateNetflixMovie = async (req: any, res: any) => {
     data: {
       title: req.body.title,
       releaseYear: req.body.releaseYear,
-      isPlayable: req.body.isPlayable,
-      searchIndex: req.body.searchIndex,
-      orderQuery: req.body.orderQuery,
+      parsed: req.body.parsed,
     },
   });
   res.json({ data: updated, errors: [] });

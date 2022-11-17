@@ -3,11 +3,10 @@ import prisma from "../db";
 export const getMoviesInGallery = async (req: any, res: any) => {
   const elementsPerPage = req.query.num ? req.query.num : 10;
   const page = req.query.page ? req.query.page : 0;
-  console.log("page", req.query.page);
 
   let ranking_platform_field = "filmaffinityMovie";
 
-  if(req.query.useIMDB) {
+  if(req.query.useIMDB === true) {
     ranking_platform_field = "imdbMovie";
   }
   try {

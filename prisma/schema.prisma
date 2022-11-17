@@ -42,19 +42,22 @@ model UserParams {
 }
 
 model Movie {
-  id          Int     @id @default(autoincrement())
-  name        String?
-  image       String?
-  year        Int?
-  releaseDate String?
-  popularity  Float?
-
-  movieCredits   MovieCredits?
-  genres         Genre[]
-  GenresOnMovies GenresOnMovies[]
-  budget         Int?
-  homepage       String?
-  platforms      Platforms?
+  id                   Int              @id @default(autoincrement())
+  name                 String?
+  image                String?
+  year                 Int?
+  releaseDate          String?
+  popularity           Float?
+  logo                 String?
+  wallpapers           String[]
+  movieCredits         MovieCredits?
+  genres               Genre[]
+  GenresOnMovies       GenresOnMovies[]
+  budget               Int?
+  homepage             String?
+  filmaffinityParsed   Boolean          @default(false)
+  rottenTomatoesParsed Boolean          @default(false)
+  platforms            Platforms?
 }
 
 model Platforms {
@@ -170,6 +173,7 @@ model IMDBMovie {
   name      String?
   rating    Float?
   votes     Int?
+  parsed    Boolean    @default(false)
   platforms Platforms?
 }
 
@@ -189,19 +193,13 @@ model RottenTomatoes {
 }
 
 model NetflixMovie {
-  id                    Int        @id
-  createdAt             DateTime   @default(now())
-  title                 String
-  releaseYear           Int
-  requestId             String?
-  type                  String?
-  isOriginal            Boolean?
-  availabilityDate      String?
-  availabilityStartTime Int?
-  isPlayable            Boolean?
-  searchIndex           Int?
-  orderQuery            String?
-  platforms             Platforms?
+  id          Int        @id
+  createdAt   DateTime   @default(now())
+  title       String
+  releaseYear Int
+  extraData   String?
+  parsed      Boolean    @default(false)
+  platforms   Platforms?
 }
 
 model HBOMovie {
@@ -209,6 +207,8 @@ model HBOMovie {
   createdAt   DateTime   @default(now())
   information String?
   releaseYear Int?
+  extraData   String
+  parsed      Boolean    @default(false)
   platforms   Platforms?
 }
 
@@ -217,6 +217,8 @@ model DisneyMovie {
   createdAt   DateTime   @default(now())
   title       String?
   releaseYear Int?
+  extraData   String
+  parsed      Boolean    @default(false)
   platforms   Platforms?
 }
 
@@ -225,4 +227,4 @@ model DisneyMovie {
 // npx prisma db seed
 // npx prisma studio
 
-// npx prisma migrate dev --name UserParams
+// npx prisma migrate dev --name parsed
