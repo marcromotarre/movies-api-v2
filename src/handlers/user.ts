@@ -30,6 +30,7 @@ export const createNewUser = async (req: any, res: any) => {
 };
 
 export const signin = async (req: any, res: any) => {
+  console.log("sign in")
   const user = await prisma.user.findUnique({
     where: {
       email: req.body.email,
@@ -49,8 +50,11 @@ export const signin = async (req: any, res: any) => {
     res.json({ message: "incorrect password" });
     return;
   }
+  console.log(user)
 
   const token = createJWT(user);
   res.status(200);
+  console.log("get Ready")
+
   res.json({ data: token, error: [] });
 };
