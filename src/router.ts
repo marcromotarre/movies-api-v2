@@ -4,7 +4,6 @@ import { body, validationResult } from "express-validator";
 import { isString } from "util";
 import { handleInputErrors } from "./modules/middleware";
 
-import { createUserRankingEngines } from "./handlers/user-ranking-engines";
 import {
   createNetflixMovie,
   deleteAllNetflixMovies,
