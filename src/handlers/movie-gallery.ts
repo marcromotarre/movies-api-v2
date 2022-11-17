@@ -1,14 +1,19 @@
 import prisma from "../db";
 
 export const getMoviesInGallery = async (req: any, res: any) => {
+
+  let ranking_platform_field = "";
+  if(req.query.ranking_platform=="FILMAFFINITY") {
+    ranking_platform_field = "filmaffinityMovie"
+  }
+  if(req.query.ranking_platform=="IMDB") {
+    ranking_platform_field = "imdbMovie"
+  }
+
+
   const elementsPerPage = req.query.num ? req.query.num : 10;
   const page = req.query.page ? req.query.page : 0;
 
-  let ranking_platform_field = "filmaffinityMovie";
-
-  if(req.query.useIMDB === true) {
-    ranking_platform_field = "imdbMovie";
-  }
   try {
     const count = await prisma.movie.count({
       where: {
