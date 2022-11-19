@@ -44,6 +44,7 @@ export const getMoviesInGallery = async (req: any, res: any) => {
         },
       },
       select: {
+        id: true,
         name: true,
         image: true,
         platforms: {
