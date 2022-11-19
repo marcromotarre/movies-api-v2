@@ -16,7 +16,7 @@ export const getMoviePlatforms = async (req: any, res: any) => {
 
 // Create User Platform for a user
 export const createMoviePlatforms = async (req: any, res: any) => {
-  console.log("platform", req.body.movieId, req.body.filmaffinityMovieId)
+  console.log("platform", req.body.movieId, req.body.filmaffinityMovieId);
   const postPlatform = await prisma.platforms.upsert({
     where: {
       movieId: req.body.movieId,
@@ -24,13 +24,15 @@ export const createMoviePlatforms = async (req: any, res: any) => {
     update: {
       netflixMovieId: req.body.netflixMovieId,
       imdbMovieId: req.body.imdbMovieId,
-      filmaffinityMovieId: req.body.filmaffinityMovieId
+      filmaffinityMovieId: req.body.filmaffinityMovieId,
+      rottenTomatoesMovieId: req.body.rottenTomatoesMovieId,
     },
     create: {
       movieId: req.body.movieId,
       netflixMovieId: req.body.netflixMovieId,
       imdbMovieId: req.body.imdbMovieId,
-      filmaffinityMovieId: req.body.filmaffinityMovieId
+      filmaffinityMovieId: req.body.filmaffinityMovieId,
+      rottenTomatoesMovieId: req.body.rottenTomatoesMovieId,
     },
   });
   res.json({ data: postPlatform, errors: [] });

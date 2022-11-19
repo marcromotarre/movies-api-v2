@@ -1,15 +1,17 @@
 import prisma from "../db";
 
 export const getMoviesInGallery = async (req: any, res: any) => {
-
   let ranking_platform_field = "";
-  if(req.query.ranking_platform=="FILMAFFINITY") {
-    ranking_platform_field = "filmaffinityMovie"
+  if (req.query.ranking_platform == "FILMAFFINITY") {
+    ranking_platform_field = "filmaffinityMovie";
   }
-  if(req.query.ranking_platform=="IMDB") {
-    ranking_platform_field = "imdbMovie"
+  if (req.query.ranking_platform == "IMDB") {
+    ranking_platform_field = "imdbMovie";
   }
 
+  if (req.query.ranking_platform == "ROTTEN_TOMATOES") {
+    ranking_platform_field = "rottenTomatoesMovie";
+  }
 
   const elementsPerPage = req.query.num ? req.query.num : 10;
   const page = req.query.page ? req.query.page : 0;
@@ -30,9 +32,15 @@ export const getMoviesInGallery = async (req: any, res: any) => {
       take: elementsPerPage,
       where: {
         platforms: {
-          [ranking_platform_field]: {
-            rating: { gt: 0 },
-          },
+          [ranking_platform_field]:
+            ranking_platform_field === "rottenTomatoesMovie"
+              ? {
+                  allAudiencePercentatge: { gt: 0 },
+                  tomatometerTopCriticsPrositiveReviewPercentatge: { gt: 0 },
+                }
+              : {
+                  rating: { gt: 0 },
+                },
         },
       },
       select: {
@@ -41,18 +49,29 @@ export const getMoviesInGallery = async (req: any, res: any) => {
         platforms: {
           select: {
             [ranking_platform_field]: {
-              select: {
-                rating: true,
-              },
+              select:
+                ranking_platform_field === "rottenTomatoesMovie"
+                  ? {
+                      allAudiencePercentatge: true,
+                      tomatometerTopCriticsPrositiveReviewPercentatge: true,
+                    }
+                  : {
+                      rating: true,
+                    },
             },
           },
         },
       },
       orderBy: {
         platforms: {
-          [ranking_platform_field]: {
-            rating: "desc",
-          },
+          [ranking_platform_field]:
+            ranking_platform_field === "rottenTomatoesMovie"
+              ? {
+                  allAudiencePercentatge: "desc",
+                }
+              : {
+                  rating: "desc",
+                },
         },
       },
     });

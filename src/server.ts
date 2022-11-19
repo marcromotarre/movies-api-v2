@@ -40,6 +40,7 @@ import {
 } from "./handlers/movie-credit";
 import { createFilmaffinityMovie } from "./handlers/filmaffinity-movie";
 import { getFilmaffinityScrapperMovies } from "./handlers/filmaffinity-scrapper";
+import { createRottenTomatoes } from "./handlers/rotten-tomatoes";
 
 const app = express();
 app.use(cors());
@@ -188,6 +189,19 @@ app.post(
   handleInputErrors,
   async (req: any, res: any) => {
     createFilmaffinityMovie(req, res);
+  }
+);
+
+/**
+ * Rotten Tomatoes
+ */
+
+ app.post(
+  "/rotten-tomatoes",
+  [],
+  handleInputErrors,
+  async (req: any, res: any) => {
+    createRottenTomatoes(req, res);
   }
 );
 

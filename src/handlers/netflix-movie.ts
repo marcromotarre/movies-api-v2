@@ -49,12 +49,6 @@ export const getNetflixMovie = async (req: any, res: any) => {
 };
 
 export const updateNetflixMovie = async (req: any, res: any) => {
-  console.log(
-    req.body.id,
-    req.body.title,
-    req.body.releaseYear,
-    req.body.parsed
-  );
   const updated = await prisma.netflixMovie.update({
     where: {
       id: parseInt(req.params.id),
