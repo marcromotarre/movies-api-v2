@@ -1,12 +1,6 @@
 import prisma from "../db";
 
 export const createNetflixMovie = async (req: any, res: any) => {
-  console.log(
-    req.body.id,
-    req.body.title,
-    req.body.releaseYear,
-    req.body.parsed
-  );
   const upsert = await prisma.netflixMovie.upsert({
     where: {
       id: req.body.id,
@@ -27,10 +21,26 @@ export const createNetflixMovie = async (req: any, res: any) => {
 };
 
 export const getNetflixMovies = async (req: any, res: any) => {
+  let where = {};
+
+  if (req.query.type == "NOT_PARSED") {
+    where = { ...where, parsed: false };
+  }
+
+  if (req.query.type == "NOT_PLATFORMS") {
+    where = { ...where, platforms: null };
+  }
+
   const get = await prisma.netflixMovie.findMany({
-    where: {
-      platforms: null,
-      parsed: false,
+    where: where,
+    select: {
+      title: true,
+      id: true,
+      platforms: {
+        select: {
+          movieId: true,
+        },
+      },
     },
     orderBy: {
       title: "desc",

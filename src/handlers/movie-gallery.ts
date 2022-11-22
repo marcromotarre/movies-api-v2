@@ -1,6 +1,7 @@
 import prisma from "../db";
 
 export const getMoviesInGallery = async (req: any, res: any) => {
+
   let ranking_platform_field = "";
   if (req.query.ranking_platform == "FILMAFFINITY") {
     ranking_platform_field = "filmaffinityMovie";
@@ -64,16 +65,7 @@ export const getMoviesInGallery = async (req: any, res: any) => {
         },
       },
       orderBy: {
-        platforms: {
-          [ranking_platform_field]:
-            ranking_platform_field === "rottenTomatoesMovie"
-              ? {
-                  allAudiencePercentatge: "desc",
-                }
-              : {
-                  rating: "desc",
-                },
-        },
+        popularity: "desc",
       },
     });
 
