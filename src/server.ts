@@ -51,7 +51,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req: any, res: any) => {
   res.status(200);
-  res.json({ message: "Filmotek API 1.8" });
+  res.json({ message: "Filmotek API 1.9" });
 });
 
 app.use("/api", protect, router);
