@@ -19,6 +19,8 @@ export const updateUserParams = async (req: any, res: any) => {
     },
     data: {
       useFilmaffinity: req.body.useFilmaffinity,
+      filmaffinityMinimumRatingValue: req.body.filmaffinityMinimumRatingValue,
+      filmaffinityMinimumVotesValue: req.body.filmaffinityMinimumVotesValue,
       useIMDB: req.body.useIMDB,
       useRottenTomatoes: req.body.useRottenTomatoes,
       chip: req.body.chip,

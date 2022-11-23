@@ -58,6 +58,7 @@ export const updateMovie = async (req: any, res: any) => {
       year: req.body.year,
       releaseDate: req.body.year,
       popularity: req.body.popularity,
+      filmaffinityParsed: req.body.filmaffinityParsed
     },
   });
   res.json({ data: updated, errors: [] });

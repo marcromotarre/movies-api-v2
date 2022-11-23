@@ -38,8 +38,8 @@ import {
   createCrewCredit,
   createMovieCredit,
 } from "./handlers/movie-credit";
-import { createFilmaffinityMovie } from "./handlers/filmaffinity-movie";
-import { getFilmaffinityScrapperMovies } from "./handlers/filmaffinity-scrapper";
+import { createFilmaffinityMovie, getFilmaffinityMovie } from "./handlers/filmaffinity-movie";
+import { getFilmaffinityScrapperMovies, getNotFoundFilmaffinityScrapperMovies } from "./handlers/filmaffinity-scrapper";
 import { createRottenTomatoes } from "./handlers/rotten-tomatoes";
 
 const app = express();
@@ -182,6 +182,14 @@ app.delete("/imdb", (req: any, res: any) => {
 /**
  * Filmaffinity
  */
+ app.get(
+  "/filmaffinity/:id",
+  [],
+  handleInputErrors,
+  async (req: any, res: any) => {
+    getFilmaffinityMovie(req, res);
+  }
+);
 
 app.post(
   "/filmaffinity",
@@ -240,5 +248,10 @@ app.post("/crew-credit", (req: any, res: any) => {
 app.get("/scrapper-left-filmaffinity", (req: any, res: any) => {
   getFilmaffinityScrapperMovies(req, res);
 });
+
+app.get("/filmaffinity-not-found", (req: any, res: any) => {
+  getNotFoundFilmaffinityScrapperMovies(req, res);
+});
+
 
 export default app;
