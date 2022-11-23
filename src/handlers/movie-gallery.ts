@@ -1,7 +1,6 @@
 import prisma from "../db";
 
 export const getMoviesInGallery = async (req: any, res: any) => {
-
   let ranking_platform_field = "";
   if (req.query.ranking_platform == "FILMAFFINITY") {
     ranking_platform_field = "filmaffinityMovie";
@@ -17,13 +16,24 @@ export const getMoviesInGallery = async (req: any, res: any) => {
   const elementsPerPage = req.query.num ? req.query.num : 10;
   const page = req.query.page ? req.query.page : 0;
 
+  const min_votes = req.query.min_votes ? parseFloat(req.query.min_votes) : 0;
+  const min_ranking = req.query.min_ranking ? parseFloat(req.query.min_ranking) : 0;
+
+  console.log(min_ranking)
   try {
     const count = await prisma.movie.count({
       where: {
         platforms: {
-          filmaffinityMovie: {
-            rating: { gt: 0 },
-          },
+          [ranking_platform_field]:
+            ranking_platform_field === "rottenTomatoesMovie"
+              ? {
+                  allAudiencePercentatge: { gt: 0 },
+                  tomatometerTopCriticsPrositiveReviewPercentatge: { gt: 0 },
+                }
+              : {
+                  rating: { gt: min_ranking },
+                  votes: { gt: min_votes },
+                },
         },
       },
     });
@@ -40,7 +50,8 @@ export const getMoviesInGallery = async (req: any, res: any) => {
                   tomatometerTopCriticsPrositiveReviewPercentatge: { gt: 0 },
                 }
               : {
-                  rating: { gt: 0 },
+                  rating: { gte: min_ranking },
+                  votes: { gte: min_votes },
                 },
         },
       },
